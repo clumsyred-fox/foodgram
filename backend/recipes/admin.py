@@ -4,9 +4,19 @@ from .models import (Favorite, Ingredient, Recipe, RecipeIngredient, RecipeTag,
                      ShoppingList, Tag)
 
 
+@admin.register(Favorite)
+class AdminFavorite(admin.ModelAdmin):
+    list_display = ('pk', 'user', 'recipe')
+
+
+@admin.register(ShoppingList)
+class AdminShoppingList(admin.ModelAdmin):
+    list_display = ('pk', 'user', 'recipe')
+
+
 @admin.register(Tag)
 class AdminTag(admin.ModelAdmin):
-    list_display = ('pk', 'name', 'slug')
+    list_display = ('pk', 'name', 'color', 'slug')
 
 
 @admin.register(Ingredient)
@@ -32,13 +42,3 @@ class AdminRecipe(admin.ModelAdmin):
 
     def in_favorite(self, obj):
         return obj.in_favorite.all().count()
-
-
-@admin.register(Favorite)
-class AdminFavorite(admin.ModelAdmin):
-    list_display = ('pk', 'user', 'recipe')
-
-
-@admin.register(ShoppingList)
-class AdminShoppingList(admin.ModelAdmin):
-    list_display = ('pk', 'user', 'recipe')

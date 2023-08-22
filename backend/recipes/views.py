@@ -4,11 +4,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from users.paginator import CustomPaginator
 
+from users.paginator import CustomPaginator
 from .filters import IngredientsFilter, RecipeFilter
 from .mixins import RetriveAndListViewSet
-from .models import (Favorite, Ingredient, Recipe, RecipeIngredient,
+from .models import (Favorite, Ingredient,
+                     Recipe, RecipeIngredient,
                      ShoppingList, Tag)
 from .permissions import IsAuthorOrAdmin
 from .serializers import (AddRecipeSerializer, FavouriteSerializer,
@@ -58,7 +59,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         if request.method == "POST":
             if Favorite.objects.filter(user=user, recipe=recipe).exists():
                 return Response(
-                    {"error": "Этот рецепт уже в избранном"},
+                    {"error": "Уже в избранном"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             favorite = Favorite.objects.create(user=user, recipe=recipe)
@@ -85,7 +86,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         if request.method == "POST":
             if ShoppingList.objects.filter(user=user, recipe=recipe).exists():
                 return Response(
-                    {"error": "Этот рецепт уже в корзине покупок"},
+                    {"error": "Уже в корзине"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             shoping_cart = ShoppingList.objects.create(user=user,

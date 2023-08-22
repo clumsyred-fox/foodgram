@@ -8,9 +8,7 @@ from rest_framework.decorators import action
 from .models import Follow
 from .paginator import CustomPaginator
 from .serializers import CustomUserSerializer, ShowFollowSerializer
-from rest_framework.permissions import (
-    AllowAny, IsAuthenticated
-)
+from rest_framework.permissions import (AllowAny, IsAuthenticated)
 
 User = get_user_model()
 
@@ -40,12 +38,12 @@ class FollowApiView(APIView):
 
         if author == user:
             return Response(
-                {'errors': 'Вы не можете подписываться на себя'},
+                {'errors': 'Нельзя фолловить себя'},
                 status=status.HTTP_400_BAD_REQUEST)
 
         if Follow.objects.filter(author=author, user=user).exists():
             return Response(
-                {'errors': 'Вы уже подписаны на этого пользователя'},
+                {'errors': 'Уже есть такая подписка'},
                 status=status.HTTP_400_BAD_REQUEST)
 
         obj = Follow(author=author, user=user)
@@ -66,7 +64,7 @@ class FollowApiView(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Follow.DoesNotExist:
             return Response(
-                'Ошибка отписки',
+                'Отписаться не получилось',
                 status=status.HTTP_400_BAD_REQUEST,
             )
 

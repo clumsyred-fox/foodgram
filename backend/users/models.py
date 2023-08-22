@@ -9,18 +9,18 @@ class User(AbstractUser):
         verbose_name='Электронная почта'
     )
     username = models.CharField(
-        max_length=150,
+        max_length=254,
         blank=False,
         unique=True,
         verbose_name='Имя пользователя'
     )
     first_name = models.CharField(
-        max_length=150,
+        max_length=254,
         blank=False,
         verbose_name='Имя'
     )
     last_name = models.CharField(
-        max_length=150,
+        max_length=254,
         blank=False,
         verbose_name='Фамилия'
     )
@@ -29,7 +29,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
     class Meta:
-        ordering = ['username']
+        ordering = ['-id']
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
@@ -48,10 +48,11 @@ class Follow(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='following',
-        verbose_name='Автор, на которого подписываются'
+        verbose_name='Автор'
     )
 
     class Meta:
+        ordering = ['-id']
         constraints = [models.UniqueConstraint(
             fields=['user', 'author'],
             name='unigue_subscriber'
