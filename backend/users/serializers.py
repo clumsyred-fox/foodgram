@@ -12,8 +12,7 @@ User = get_user_model()
 class UserRegistrationSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
         model = User
-        fields = ('email', 'username',
-                  'first_name', 'last_name', 'password')
+        fields = ('email', 'username', 'first_name', 'last_name', 'password')
 
 
 class CustomUserSerializer(UserSerializer):
@@ -21,8 +20,7 @@ class CustomUserSerializer(UserSerializer):
 
     class Meta():
         model = User
-        fields = ('id', 'email',
-                  'username', 'first_name',
+        fields = ('id', 'email', 'username', 'first_name',
                   'last_name', 'is_subscribed')
 
     def get_is_subscribed(self, obj):
@@ -47,10 +45,8 @@ class ShowFollowSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'id', 'email',
-            'username', 'first_name',
-            'last_name', 'is_subscribed',
-            'recipes', 'recipes_count'
+            'id', 'email', 'username', 'first_name', 'last_name',
+            'is_subscribed', 'recipes', 'recipes_count'
         )
         read_only_fields = fields
 
