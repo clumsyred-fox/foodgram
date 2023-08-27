@@ -1,4 +1,4 @@
-![foodgram workflow](https://github.com/DmitryTok/foodgram-project-react/actions/workflows/main.yml/badge.svg)
+# Технологии
 [![Python](https://img.shields.io/badge/-Python-464646?style=flat-square&logo=Python)](https://www.python.org/)
 [![Django](https://img.shields.io/badge/-Django-464646?style=flat-square&logo=Django)](https://www.djangoproject.com/)
 [![Django REST Framework](https://img.shields.io/badge/-Django%20REST%20Framework-464646?style=flat-square&logo=Django%20REST%20Framework)](https://www.django-rest-framework.org/)
@@ -6,13 +6,11 @@
 [![Nginx](https://img.shields.io/badge/-NGINX-464646?style=flat-square&logo=NGINX)](https://nginx.org/ru/)
 [![gunicorn](https://img.shields.io/badge/-gunicorn-464646?style=flat-square&logo=gunicorn)](https://gunicorn.org/)
 [![docker](https://img.shields.io/badge/-Docker-464646?style=flat-square&logo=docker)](https://www.docker.com/)
-[![GitHub%20Actions](https://img.shields.io/badge/-GitHub%20Actions-464646?style=flat-square&logo=GitHub%20actions)](https://github.com/features/actions)
-[![Yandex.Cloud](https://img.shields.io/badge/-Yandex.Cloud-464646?style=flat-square&logo=Yandex.Cloud)](https://cloud.yandex.ru/)
+
 # Продуктовый помощник
-Приложение "Продуктовый помощник": сайт, на котором вы можете публиковать рецепты, добавлять чужие рецепты в избранное и подписываться на публикации других авторов. Сервис "Список покупок" позволяет пользователям создавать список продуктов, необходимых для приготовления выбранных блюд.
+Foodgram - социальная сеть для любителей вкусного, где можно публиковать свои рецепты, подписываться на других кулинаров, добавлять шедевры в избранное, а также формировать список покупок для приготовления всех выбранных блюд.
 
-# Запуск проекта
-## Запуск проекта в dev-режиме без Docker
+# Запуск проекта в контейнерах Docker
 ### Клонируйте репозиторий на свой компьютер
 #### HTTPS
 ```
@@ -22,118 +20,44 @@ git clone https://github.com/AleksSpace/foodgram-project-react.git
 ```
 git clone git@github.com:AleksSpace/foodgram-project-react.git
 ```
-#### GitHub CLI
-```
-git clone gh repo clone AleksSpace/foodgram-project-react
-```
 ### Создайте и активируйте виртуальное окружение
+```
+cd название_проекта/backend/
+python -m venv venv
+source venv/bin/activate
+```
+### Установите зависимостси
 ```
 python -m venv venv
 ```
-```
-. venv/Scripts/activate
-```
-### Обновите pip
-```
-python -m pip install --upgrade pip
-```
-### Перейдите (команда cd ...) в папку с файлом requirements.txt и установите зависимостси
 ```
 pip install -r requirements.txt
 ```
 ## Создайте файл .env
-С помощью команды cd перейдите в папку infra и введите команду для создания .env-файла
+С помощью команды cd перейдите в папку infra 
 ```
-echo 'SECRET_KEY=some-secret-key
+touch .env
+```
+Заполните файл, пример ниже:
+```
+SECRET_KEY=some-secret-key
 ALLOWED_HOSTS=*
-DEBUG=1
-DB_ENGINE=django.db.backends.postgresql # укажите, с какой БД вы работаете
-DB_NAME=postgres # имя базы данных
-POSTGRES_USER=<...> # логин для подключения к базе данных
-POSTGRES_PASSWORD=<...> # пароль для подключения к базе данных (создайте свой собственный)
-DB_HOST=<...> # название хоста (контейнера)
-DB_PORT=<...> # порт для подключения к базе данных
-' > .env
+DEBUG=True
+DB_ENGINE=django.db.backends.postgresql 
+DB_NAME=postgres
+POSTGRES_USER=<...> 
+POSTGRES_PASSWORD=<...>
+DB_HOST=<...> 
+DB_PORT=<...> 
 ```
-## Запуск проекта
-
-#### Перейдите в папку backend и выполните команды
+## Сборка и запуск контейнеров
+Установите приложение [Docker](https://www.docker.com/products/docker-desktop/) на свой ПК.
+#### Отредактируйте файл docker-compose.yml
 ```
-python manage.py migrate - Выполнение миграций
-```
-```
-python manage.py createsuperuser - Создание суперпользователя
-```
-```
-python manage.py loaddata fixtures/ingredients.json - Загрузка тестовой БД
-```
-```
-python manage.py runserver localhost:8080 - Запуск Dev-сервера
-```
-## Проект будет доступен по ссылке:
-http://localhost/
-
-http://localhost/admin/
-***
-## Запуск проекта в контейнерах Docker
-### Клонируйте репозиторий на свой компьютер
-#### HTTPS
-```
-git clone https://github.com/AleksSpace/foodgram-project-react.git
-```
-#### SSH
-```
-git clone git@github.com:AleksSpace/foodgram-project-react.git
-```
-#### GitHub CLI
-```
-git clone gh repo clone AleksSpace/foodgram-project-react
-```
-### Создайте и активируйте виртуальное окружение
-```
-python -m venv venv
-. venv/Scripts/activate
-```
-### Обновите pip и установите зависимостси
-```
-python -m venv venv
-```
-```
-. venv/Scripts/activate
-```
-### Обновите pip
-```
-python -m pip install --upgrade pip
-```
-### Перейдите (команда cd ...) в папку с файлом requirements.txt и установите зависимостси
-```
-pip install -r requirements.txt
-```
-## Создайте файл .env
-На production обязательно заменить значение SECRET_KEY
-С помощью команды cd перейдите в папку infra и введите команду для создания .env-файла
-```
-echo 'SECRET_KEY=some-secret-key
-ALLOWED_HOSTS=*
-DEBUG=1
-DB_ENGINE=django.db.backends.postgresql # укажите, с какой базой данных вы работаете
-DB_NAME=postgres # имя базы данных
-POSTGRES_USER=<...> # логин для подключения к базе данных
-POSTGRES_PASSWORD=<...> # пароль для подключения к базе данных (создайте свой собственный)
-DB_HOST=<...> # название хоста (контейнера)
-DB_PORT=<...> # порт для подключения к базе данных
-' > .env
-```
-## Сборка и запуск контейнеров локально на своем ПК.
-Для этого вам понадобится установить приложение [Docker](https://www.docker.com/products/docker-desktop/) на свой ПК.
-#### Для локального запуска необходимо отредактировать файл docker-compose.yml
-Перейдите в папку infra и отредактируйте файл, в разделе web:
-```
-web:
+backend:
     build:
       context: ../backend
       dockerfile: Dockerfile
-    restart: always
     volumes:
       - static_backend_value:/code/static_backend/
       - media_data:/code/media/
@@ -142,7 +66,6 @@ web:
     env_file:
       - ./.env
 ```
-в разделе frontend:
 ```
 frontend:
     build:
@@ -151,14 +74,13 @@ frontend:
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:
-      - web
+      - backend
 ```
 #### Для запуска из DockerHub необходимо в файле docker-compose.yml указать имя пользователя и название репозитория
 Перейдите в папку infra и отредактируйте файл, в разделе web:
 ```
-web:
+backend:
     image: <Имя пользователя>/<Название репозитория>
-    restart: always
     volumes:
       - static_backend_value:/code/static_backend/
       - media_data:/code/media/
@@ -167,17 +89,16 @@ web:
     env_file:
       - ./.env
 ```
-в разделе frontend:
 ```
 frontend:
     image: <Имя пользователя>/<Название репозитория>
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:
-      - web
+      - backend
 ```
 ### Сборка контейенеров
-Перейдите в папку infra и запустите команду в терминале
+Перейдите в папку infra
 
 ```
 docker compose up -d
@@ -191,8 +112,9 @@ docker compose exec web python manage.py createsuperuser
 Заполните БД подготовленными данными при первом запуске
 
 ``` 
-docker compose exec web python manage.py loaddata fixtures/ingredients.json
+docker compose exec web python manage.py loaddata fixtures/ingredients_to_load.json
 ```
+Чтобы сформировать ingredients_to_load.json можно запустить скрипт prepare_data
 ***
 ## Проект будет доступен по ссылке:
 
@@ -200,11 +122,11 @@ API - http://localhost/
 
 Redoc - http://localhost/api/docs/
 
-Админка - http://localhost/admin/
+Панель администратора - http://localhost/admin/
 
 
 ## Deploy на сервер
-При пуше в ветку master выполняется автоматическое разворачивание проекта на сервере (после всех тестов)
+При пуше в ветку master выполняется автоматическое разворачивание проекта на сервере при заполнении секретов в гитхабе в данном репозитории
 ***
 ### Об авторе
-- [Заикин Алексей](https://github.com/AleksSpace "GitHub аккаунт")
+- Ганецкая Елизавета - backend и deploy
