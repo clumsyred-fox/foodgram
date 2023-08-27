@@ -1,4 +1,10 @@
 version: '3.8'
+
+volumes:
+  static_backend_value:
+  media_data:
+  postgresql_data:
+
 services:
   db:
     image: postgres:13.10
@@ -47,8 +53,3 @@ services:
     depends_on:
       - backend
       - frontend
-
-volumes:
-  static_backend_value:
-  media_data:
-  postgresql_data:

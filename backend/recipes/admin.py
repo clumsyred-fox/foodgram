@@ -1,12 +1,15 @@
 from django.contrib import admin
 
-from .models import (Favorite, Ingredient, Recipe, RecipeIngredient, RecipeTag,
-                     ShoppingList, Tag)
+from .models import (Favorite, Ingredient,
+                     Recipe, RecipeIngredient,
+                     RecipeTag, ShoppingList, Tag)
 
 
 @admin.register(Tag)
 class AdminTag(admin.ModelAdmin):
-    list_display = ('pk', 'name', 'slug')
+    list_display = ('pk', 'name', 'color', 'slug')
+    list_filter = ['name']
+    search_fields = ('name',)
 
 
 @admin.register(Ingredient)
@@ -37,8 +40,12 @@ class AdminRecipe(admin.ModelAdmin):
 @admin.register(Favorite)
 class AdminFavorite(admin.ModelAdmin):
     list_display = ('pk', 'user', 'recipe')
+    list_filter = ['user', 'recipe']
+    search_fields = ('user', 'recipe')
 
 
 @admin.register(ShoppingList)
 class AdminShoppingList(admin.ModelAdmin):
     list_display = ('pk', 'user', 'recipe')
+    list_filter = ['user', 'recipe']
+    search_fields = ('user', 'recipe')

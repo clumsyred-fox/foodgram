@@ -12,7 +12,8 @@ User = get_user_model()
 class UserRegistrationSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
         model = User
-        fields = ('email', 'username', 'first_name', 'last_name', 'password')
+        fields = ('email', 'username',
+                  'first_name', 'last_name', 'password')
 
 
 class CustomUserSerializer(UserSerializer):
@@ -27,8 +28,8 @@ class CustomUserSerializer(UserSerializer):
         request = self.context.get('request')
         if not request or request.user.is_anonymous:
             return False
-        return Follow.objects.filter(user=self.context['request'].user,
-                                     author=obj).exists()
+        return Follow.objects.filter(
+            user=self.context['request'].user, author=obj).exists()
 
 
 class FollowingRecipesSerializers(serializers.ModelSerializer):
@@ -45,8 +46,10 @@ class ShowFollowSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'id', 'email', 'username', 'first_name', 'last_name',
-            'is_subscribed', 'recipes', 'recipes_count'
+            'id', 'email', 'username',
+            'first_name', 'last_name',
+            'is_subscribed', 'recipes',
+            'recipes_count'
         )
         read_only_fields = fields
 
@@ -57,11 +60,10 @@ class ShowFollowSerializer(serializers.ModelSerializer):
             author=obj, user=self.context['request'].user).exists()
 
     def get_recipes(self, obj):
-        recipes_limit = int(self.context['request'].GET.get(
-            'recipes_limit', 10))
+        recipes_limit = int(
+            self.context['request'].GET.get('recipes_limit', 10))
         user = get_object_or_404(User, pk=obj.pk)
         recipes = Recipe.objects.filter(author=user)[:recipes_limit]
-
         return FollowingRecipesSerializers(recipes, many=True).data
 
     def get_recipes_count(self, obj):
