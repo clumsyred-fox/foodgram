@@ -41,8 +41,8 @@ services:
 
 
   nginx:
-    image: ganetzckayaliza/foodgram-nginx  
-    # image: nginx:1.19.3
+    # image: ganetzckayaliza/foodgram-nginx  
+    image: nginx:1.19.3
     ports:
       - 8000:80
     volumes:
