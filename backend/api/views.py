@@ -6,24 +6,22 @@ from rest_framework import generics, permissions, status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from api.filters import IngredientsFilter, RecipeFilter
 from api.mixins import RetriveAndListViewSet
-from api.permissions import IsAuthorOrAdmin
-from api.utils import download_file_response
-from recipes.models import (Favorite, Ingredient,
-                            Recipe, RecipeIngredient,
-                            ShoppingList, Tag)
-from users.models import Follow
 from api.paginator import CustomPaginator
+from api.permissions import IsAuthorOrAdmin
 from api.serializers import (CustomUserSerializer, ShowFollowSerializer,
                              PostRecipeSerializer, FavouriteSerializer,
                              IngredientsSerializer, ShoppingListSerializer,
                              GetRecipeDetailsSerializer, TagsSerializer
                              )
-from rest_framework.permissions import (
-    AllowAny, IsAuthenticated
-)
+from api.utils import download_file_response
+from recipes.models import (Favorite, Ingredient,
+                            Recipe, RecipeIngredient,
+                            ShoppingList, Tag)
+from users.models import Follow
 
 User = get_user_model()
 
