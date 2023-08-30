@@ -31,6 +31,12 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = CustomUserSerializer
     permission_classes = [AllowAny, ]
 
+    @action(detail=True, methods=['get'], permission_classes=[AllowAny])
+    def view_user(self, request, pk=None):
+        user = self.get_object()
+        serializer = self.get_serializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     @action(
         detail=False,
         methods=['get'],
