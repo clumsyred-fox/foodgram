@@ -7,8 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import action
 from rest_framework.permissions import (IsAuthenticatedOrReadOnly,
-                                        # IsAuthenticated
-                                        )
+                                        IsAuthenticated)
 
 from api.filters import IngredientsFilter, RecipeFilter
 from api.mixins import RetriveAndListViewSet
@@ -36,7 +35,7 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(
         detail=False,
         methods=['get'],
-        permission_classes=(IsAuthenticatedOrReadOnly, )
+        permission_classes=(IsAuthenticated, )
     )
     def me(self, request):
         serializer = self.get_serializer(self.request.user)
@@ -105,7 +104,7 @@ class TagsViewSet(RetriveAndListViewSet):
 class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all().order_by('-id')
     serializer_class = GetRecipeDetailsSerializer
-    permission_classes = [IsAuthorOrAdmin]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend]
     filterset_class = RecipeFilter
     pagination_class = CustomPaginator
