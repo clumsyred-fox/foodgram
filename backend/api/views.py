@@ -35,7 +35,7 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(
         detail=False,
         methods=['get'],
-        permission_classes=(IsAuthenticated, )
+        permission_classes=(IsAuthenticatedOrReadOnly, )
     )
     def me(self, request):
         serializer = self.get_serializer(self.request.user)
