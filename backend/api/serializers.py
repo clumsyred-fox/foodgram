@@ -176,8 +176,8 @@ class PostRecipeSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError(
                     'Ингридиент уже добавлен')
             elif ingredient['amount'] < 1:
-                raise serializers.ValidationError(
-                    'Минимальное количество: 1')
+                raise serializers.ValidationError({
+                    'Минимальное количество: 1'})
             else:
                 ingredients_set.append(ingredient['id'])
         return value
