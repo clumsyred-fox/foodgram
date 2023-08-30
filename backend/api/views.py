@@ -6,7 +6,8 @@ from rest_framework import generics, permissions, status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.permissions import (IsAuthenticatedOrReadOnly,
+                                        IsAuthenticated)
 
 from api.filters import IngredientsFilter, RecipeFilter
 from api.mixins import RetriveAndListViewSet
@@ -87,7 +88,7 @@ class ListFollowViewSet(generics.ListAPIView):
 class IngredientsViewSet(RetriveAndListViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientsSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend]
     filterset_class = IngredientsFilter
     pagination_class = None
@@ -96,7 +97,7 @@ class IngredientsViewSet(RetriveAndListViewSet):
 class TagsViewSet(RetriveAndListViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagsSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     pagination_class = None
 
 
