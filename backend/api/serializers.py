@@ -5,8 +5,8 @@ from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
 
 from recipes.models import (Favorite, Ingredient,
-                     Recipe, RecipeIngredient,
-                     ShoppingList, Tag)
+                            Recipe, RecipeIngredient,
+                            ShoppingList, Tag)
 from users.models import Follow
 
 User = get_user_model()
@@ -185,13 +185,13 @@ class PostRecipeSerializer(serializers.ModelSerializer):
     def validate_tags(self, value):
         if len(value) != len(set(value)):
             raise serializers.ValidationError(
-                'Повторять теги в рецептах нельзя'
-            )
+                'Повторять теги в рецептах нельзя')
         return value
 
     def validate_cooking_time(self, value):
         if value <= 0:
-            raise serializers.ValidationError('Время приготовления от 1 минуты')
+            raise serializers.ValidationError(
+                'Время приготовления от 1 минуты')
         return value
 
     def add_recipe_ingredients(self, ingredients, recipe):

@@ -12,15 +12,15 @@ from api.mixins import RetriveAndListViewSet
 from api.permissions import IsAuthorOrAdmin
 from api.utils import download_file_response
 from recipes.models import (Favorite, Ingredient,
-                     Recipe, RecipeIngredient,
-                     ShoppingList, Tag)
+                            Recipe, RecipeIngredient,
+                            ShoppingList, Tag)
 from users.models import Follow
 from api.paginator import CustomPaginator
 from api.serializers import (CustomUserSerializer, ShowFollowSerializer,
-                          PostRecipeSerializer, FavouriteSerializer,
-                          IngredientsSerializer, ShoppingListSerializer,
-                          GetRecipeDetailsSerializer, TagsSerializer
-                          )
+                             PostRecipeSerializer, FavouriteSerializer,
+                             IngredientsSerializer, ShoppingListSerializer,
+                             GetRecipeDetailsSerializer, TagsSerializer
+                             )
 from rest_framework.permissions import (
     AllowAny, IsAuthenticated
 )
