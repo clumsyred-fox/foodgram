@@ -104,7 +104,7 @@ class TagsViewSet(RetriveAndListViewSet):
 class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all().order_by('-id')
     serializer_class = GetRecipeDetailsSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthorOrAdmin]
     filter_backends = [DjangoFilterBackend]
     filterset_class = RecipeFilter
     pagination_class = CustomPaginator
