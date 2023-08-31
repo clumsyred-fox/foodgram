@@ -22,7 +22,7 @@ class UserRegistrationSerializer(UserCreateSerializer):
 class CustomUserSerializer(UserSerializer):
     is_subscribed = serializers.SerializerMethodField(read_only=True)
 
-    class Meta():
+    class Meta:
         model = User
         fields = ('id', 'email', 'username', 'first_name',
                   'last_name', 'is_subscribed')
