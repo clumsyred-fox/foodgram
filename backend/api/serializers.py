@@ -6,6 +6,7 @@ from rest_framework import serializers
 from recipes.models import (Favorite, Ingredient,
                             Recipe, RecipeIngredient,
                             ShoppingList, Tag)
+from users.models import Follow
 
 User = get_user_model()
 
@@ -25,12 +26,11 @@ class CustomUserSerializer(UserSerializer):
         fields = ('id', 'email', 'username', 'first_name',
                   'last_name', 'is_subscribed')
 
-    def get_is_subscribed(self, obj):
-        request = self.context.get('request')
-        user = self.context['request'].user
-        if not request or request.user.is_anonymous:
-            return False
-        return user.followers.filter(author=obj).exists()
+    def get_is_subscribed(self, obj): 
+        if not self.context['request'].user.is_authenticated: 
+            return False 
+        return Follow.objects.filter( 
+            author=obj, user=self.context['request'].user).exists()
 
 
 class FollowingRecipesSerializers(serializers.ModelSerializer):
@@ -54,12 +54,11 @@ class ShowFollowSerializer(serializers.ModelSerializer):
         )
         read_only_fields = fields
 
-    def get_is_subscribed(self, obj):
-        request = self.context.get('request')
-        user = self.context['request'].user
-        if not request or request.user.is_anonymous:
-            return False
-        return user.followers.filter(author=obj).exists()
+    def get_is_subscribed(self, obj): 
+        if not self.context['request'].user.is_authenticated: 
+            return False 
+        return Follow.objects.filter( 
+            author=obj, user=self.context['request'].user).exists() 
 
     def get_recipes(self, obj):
         recipes_limit = int(
