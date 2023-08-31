@@ -51,7 +51,6 @@ class Follow(models.Model):
         verbose_name='Автор'
     )
 
-
     class Meta:
         constraints = [models.UniqueConstraint(
             fields=['user', 'author'],
