@@ -27,7 +27,7 @@ class CustomUserSerializer(UserSerializer):
 
     def get_is_subscribed(self, obj):
         request = self.context.get('request')
-        user = request.user
+        user = self.context['request'].user
         if not request or request.user.is_anonymous:
             return False
         return user.followers.filter(author=obj).exists()
@@ -56,7 +56,7 @@ class ShowFollowSerializer(serializers.ModelSerializer):
 
     def get_is_subscribed(self, obj):
         request = self.context.get('request')
-        user = request.user
+        user = self.context['request'].user
         if not request or request.user.is_anonymous:
             return False
         return user.followers.filter(author=obj).exists()
