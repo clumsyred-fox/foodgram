@@ -37,18 +37,18 @@ class User(AbstractUser):
         return self.email
 
 
-class Follow(models.Model): 
-    user = models.ForeignKey( 
-        User, 
-        on_delete=models.CASCADE, 
-        related_name='user', 
-        verbose_name='Подписчик' 
-    ) 
-    author = models.ForeignKey( 
-        User, 
-        on_delete=models.CASCADE, 
-        related_name='following', 
-        verbose_name='Автор' 
+class Follow(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='user',
+        verbose_name='Подписчик'
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='following',
+        verbose_name='Автор'
     )
 
     class Meta:

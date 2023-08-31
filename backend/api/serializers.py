@@ -26,10 +26,11 @@ class CustomUserSerializer(UserSerializer):
         fields = ('id', 'email', 'username', 'first_name',
                   'last_name', 'is_subscribed')
 
-    def get_is_subscribed(self, obj): 
-        if not self.context['request'].user.is_authenticated: 
-            return False 
-        return Follow.objects.filter( 
+    def get_is_subscribed(self, obj):
+        print(type(obj), obj)
+        if not self.context['request'].user.is_authenticated:
+            return False
+        return Follow.objects.filter(
             author=obj, user=self.context['request'].user).exists()
 
 
@@ -54,11 +55,12 @@ class ShowFollowSerializer(serializers.ModelSerializer):
         )
         read_only_fields = fields
 
-    def get_is_subscribed(self, obj): 
-        if not self.context['request'].user.is_authenticated: 
-            return False 
-        return Follow.objects.filter( 
-            author=obj, user=self.context['request'].user).exists() 
+    def get_is_subscribed(self, obj):
+        print(type(obj), obj)
+        if not self.context['request'].user.is_authenticated:
+            return False
+        return Follow.objects.filter(
+            author=obj, user=self.context['request'].user).exists()
 
     def get_recipes(self, obj):
         recipes_limit = int(
