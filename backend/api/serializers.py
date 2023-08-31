@@ -30,7 +30,7 @@ class CustomUserSerializer(UserSerializer):
         user = request.user
         if not request or request.user.is_anonymous:
             return False
-        return user.followers.filter(author=obj).exists()
+        return user.following.filter(user=obj).exists()
 
 
 class FollowingRecipesSerializers(serializers.ModelSerializer):
@@ -59,7 +59,7 @@ class ShowFollowSerializer(serializers.ModelSerializer):
         user = request.user
         if not request or request.user.is_anonymous:
             return False
-        return user.followers.filter(author=obj).exists()
+        return user.following.filter(user=obj).exists()
 
     def get_recipes(self, obj):
         recipes_limit = int(
