@@ -6,8 +6,6 @@ from rest_framework import generics, permissions, status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import action
-from rest_framework.permissions import (IsAuthenticatedOrReadOnly,
-                                        IsAuthenticated)
 
 from api.filters import IngredientsFilter, RecipeFilter
 from api.mixins import RetriveAndListViewSet
@@ -30,12 +28,12 @@ User = get_user_model()
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, ]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, ]
 
     @action(
         detail=False,
         methods=['get'],
-        permission_classes=(IsAuthenticated, )
+        permission_classes=(permissions.IsAuthenticated, )
     )
     def me(self, request):
         serializer = self.get_serializer(self.request.user)
