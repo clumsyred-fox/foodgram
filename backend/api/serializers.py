@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404
 from drf_extra_fields.fields import Base64ImageField
 from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
@@ -7,7 +6,6 @@ from rest_framework import serializers
 from recipes.models import (Favorite, Ingredient,
                             Recipe, RecipeIngredient,
                             ShoppingList, Tag)
-from users.models import Follow
 
 User = get_user_model()
 
@@ -61,11 +59,10 @@ class ShowFollowSerializer(serializers.ModelSerializer):
             return False
         return obj.following.filter(user=request.user).exists()
 
-    def get_recipes(self, obj): 
+    def get_recipes(self, obj):
         recipes_limit = int(
             self.context['request'].GET.get('recipes_limit', 10))
         return obj.recipes.all()[:recipes_limit]
-
 
     def get_recipes_count(self, obj):
         return obj.recipes.count()
@@ -238,7 +235,7 @@ class FavouriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
         fields = ('user', 'recipe')
-    
+
     def validate(self, data):
         user = data['user']
         recipe = data['recipe']
@@ -268,7 +265,6 @@ class ShoppingListSerializer(serializers.ModelSerializer):
         if user.shopping_list.filter(recipe=recipe).exists():
             raise serializers.ValidationError('Уже в корзине')
         return data
-
 
     def to_representation(self, instance):
         request = self.context.get('request')
