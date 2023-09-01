@@ -50,7 +50,7 @@ class FollowApiView(APIView):
         if author == user:
             return Response({'errors': 'Нельзя фолловить себя'},
                             status=status.HTTP_400_BAD_REQUEST)
-        if Follow.objects.filter(author=author, user=user).exists():
+        if user.following.filter(author=author).exists():
             return Response({'errors': 'Уже подписаны'},
                             status=status.HTTP_400_BAD_REQUEST)
         obj = Follow(author=author, user=user)
@@ -122,7 +122,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         user = request.user
         recipe = get_object_or_404(Recipe, id=pk)
         if request.method == "POST":
-            if Favorite.objects.filter(user=user, recipe=recipe).exists():
+            if recipe.in_favorite.filter(user=user).exists():
                 return Response({"error": "Уже в избранном"},
                                 status=status.HTTP_400_BAD_REQUEST,
                                 )
@@ -132,7 +132,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         if request.method == "DELETE":
-            favorite = Favorite.objects.filter(user=user, recipe=recipe)
+            favorite = recipe.in_favorite.filter(user=user)
             if favorite.exists():
                 favorite.delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
@@ -148,7 +148,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         user = request.user
         recipe = get_object_or_404(Recipe, id=pk)
         if request.method == "POST":
-            if ShoppingList.objects.filter(user=user, recipe=recipe).exists():
+            if recipe.shopping_cart.filter(user=user).exists():
                 return Response({"error": "Уже в корзине"},
                                 status=status.HTTP_400_BAD_REQUEST,
                                 )
@@ -160,8 +160,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         if request.method == "DELETE":
-            delete_shoping_cart = ShoppingList.objects.filter(
-                user=user, recipe=recipe)
+            delete_shoping_cart = recipe.shopping_cart.filter(user=user)
             if delete_shoping_cart.exists():
                 delete_shoping_cart.delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
