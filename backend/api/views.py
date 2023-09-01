@@ -50,7 +50,7 @@ class FollowApiView(APIView):
         if author == user:
             return Response({'errors': 'Нельзя фолловить себя'},
                             status=status.HTTP_400_BAD_REQUEST)
-        if user.following.filter(author=author).exists():
+        if user.followers.filter(author=author).exists():
             return Response({'errors': 'Уже подписаны'},
                             status=status.HTTP_400_BAD_REQUEST)
         obj = Follow(author=author, user=user)
