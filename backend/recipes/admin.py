@@ -35,6 +35,7 @@ class AdminRecipe(admin.ModelAdmin):
 
     def in_favorite(self, obj):
         return obj.in_favorite.all().count()
+    in_favorite.short_description = 'В ИЗБРАННОМ'
 
 
 @admin.register(Favorite)
