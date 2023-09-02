@@ -10,5 +10,6 @@ def download_file_response(ingredients_list):
     filename = "buylist.txt"
     content = ''.join(buy_list)
     response = HttpResponse(content, content_type='text/plain')
-    response['Content-Disposition'] = 'attachment; filename={0}'.format(filename)
+    response[
+        'Content-Disposition'] = 'attachment; filename={0}'.format(filename)
     return response
