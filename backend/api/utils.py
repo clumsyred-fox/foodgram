@@ -7,9 +7,7 @@ def download_file_response(ingredients_list):
         buy_list.append(f'{item["ingredient__name"]} - {item["amount"]} '
                         f'{item["ingredient__measurement_unit"]}\n')
 
-    filename = "buylist.txt"
-    content = ''.join(buy_list)
-    response = HttpResponse(content, content_type='text/plain')
-    response[
-        'Content-Disposition'] = 'attachment; filename={0}'.format(filename)
+    response_content = ''.join(buy_list)
+    response = HttpResponse(response_content, content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename="buylist.txt"'
     return response
