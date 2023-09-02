@@ -31,6 +31,7 @@ class RecipeTagsInline(admin.TabularInline):
 class AdminRecipe(admin.ModelAdmin):
     list_display = ('pk', 'name', 'author', 'in_favorite')
     list_filter = ['name', 'author', 'tags']
+    search_fields = ('name', 'author__email')
     inlines = (RecipeIngredientsInline, RecipeTagsInline)
 
     def in_favorite(self, obj):
@@ -42,11 +43,11 @@ class AdminRecipe(admin.ModelAdmin):
 class AdminFavorite(admin.ModelAdmin):
     list_display = ('pk', 'user', 'recipe')
     list_filter = ['user', 'recipe']
-    search_fields = ('user', 'recipe')
+    search_fields = ('user__email', 'recipe__name')
 
 
 @admin.register(ShoppingList)
 class AdminShoppingList(admin.ModelAdmin):
     list_display = ('pk', 'user', 'recipe')
     list_filter = ['user', 'recipe']
-    search_fields = ('user', 'recipe')
+    search_fields = ('user__email', 'recipe__name')
